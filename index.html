@@ -593,6 +593,63 @@
     }
     .audio-link:hover { background: var(--accent); }
 
+    /* ════════════ MEDIOS DE PAGO STRIP ════════════ */
+    .pay-strip {
+      background: var(--white);
+      border-top: 1px solid var(--light-gray);
+      border-bottom: 1px solid var(--light-gray);
+      padding: 28px 80px;
+    }
+    .pay-strip-inner {
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+    }
+    .pay-strip-label {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cool-gray); white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .pay-strip-logos {
+      display: flex; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .pay-pill {
+      display: flex; align-items: center; justify-content: center;
+      padding: 7px 12px;
+      background: var(--off-white);
+      border: 1px solid var(--light-gray);
+      border-radius: 8px;
+      height: 38px;
+      transition: all 0.2s;
+      gap: 0;
+    }
+    .pay-pill:hover {
+      border-color: var(--mid-gray);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    }
+    .pay-pill svg { display: block; flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .pay-strip { padding: 22px 24px; }
+      .pay-strip-inner { gap: 16px; }
+      .pay-strip-label { width: 100%; }
+    }
+
+    /* Mini pay strip inside modal */
+    .modal-pay-methods {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 18px; padding-top: 18px;
+      border-top: 1px solid var(--light-gray);
+    }
+    .modal-pay-pill {
+      display: flex; align-items: center; gap: 4px;
+      padding: 4px 10px;
+      background: var(--off-white);
+      border: 1px solid var(--light-gray);
+      border-radius: 6px; font-size: 0.65rem;
+      font-weight: 600; color: var(--cool-gray);
+    }
+
     /* ════════════ FORMULARIO ════════════ */
     #contacto { background: var(--white); }
 
@@ -996,6 +1053,94 @@
     <div class="audio-grid" id="audioGrid"><!-- generado por JS --></div>
   </section>
 
+  <!-- MEDIOS DE PAGO -->
+  <div class="pay-strip" id="payStrip">
+    <div class="pay-strip-inner">
+      <span class="pay-strip-label">Medios de pago aceptados</span>
+      <div class="pay-strip-logos">
+
+        <!-- VISA -->
+        <div class="pay-pill">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png"
+               alt="Visa" style="height:16px;width:auto;display:block;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;font-size:0.72rem;font-weight:800;color:#1A1F71;letter-spacing:1px;">VISA</span>
+        </div>
+
+        <!-- MASTERCARD -->
+        <div class="pay-pill">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png"
+               alt="Mastercard" style="height:26px;width:auto;display:block;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;font-size:0.7rem;font-weight:700;color:#555;">Mastercard</span>
+        </div>
+
+        <!-- AMEX -->
+        <div class="pay-pill">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/American_Express_logo_%282018%29.svg/200px-American_Express_logo_%282018%29.svg.png"
+               alt="American Express" style="height:24px;width:auto;display:block;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;font-size:0.65rem;font-weight:700;color:#2E77BC;">AMEX</span>
+        </div>
+
+        <!-- GOOGLE PAY -->
+        <div class="pay-pill">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/200px-Google_Pay_Logo.svg.png"
+               alt="Google Pay" style="height:22px;width:auto;display:block;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;font-size:0.7rem;font-weight:700;color:#555;">Google Pay</span>
+        </div>
+
+        <!-- APPLE PAY -->
+        <div class="pay-pill" style="background:#000;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/200px-Apple_Pay_logo.svg.png"
+               alt="Apple Pay" style="height:20px;width:auto;display:block;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;font-size:0.7rem;font-weight:700;color:#fff;">Apple Pay</span>
+        </div>
+
+        <!-- MERCADOPAGO -->
+        <div class="pay-pill">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/MercadoPago_logo.png/200px-MercadoPago_logo.png"
+               alt="MercadoPago" style="height:22px;width:auto;display:block;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span style="display:none;font-size:0.7rem;font-weight:700;color:#00B1EA;">MercadoPago</span>
+        </div>
+
+        <!-- DÉBITO -->
+        <div class="pay-pill" style="gap:6px;">
+          <svg viewBox="0 0 18 13" width="22" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="17" height="12" rx="1.5" stroke="#888" stroke-width="1"/>
+            <rect y="2.5" width="18" height="3" fill="#888"/>
+            <rect x="2" y="8.5" width="5" height="1.5" rx="0.5" fill="#bbb"/>
+          </svg>
+          <span style="font-size:0.72rem;font-weight:600;color:#555;">Débito</span>
+        </div>
+
+        <!-- CRÉDITO -->
+        <div class="pay-pill" style="gap:6px;">
+          <svg viewBox="0 0 18 13" width="22" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="17" height="12" rx="1.5" stroke="#888" stroke-width="1"/>
+            <circle cx="5.5" cy="9.5" r="2" fill="#EB001B" opacity="0.75"/>
+            <circle cx="8.5" cy="9.5" r="2" fill="#F79E1B" opacity="0.75"/>
+            <rect x="2" y="4" width="7" height="1.5" rx="0.5" fill="#bbb"/>
+          </svg>
+          <span style="font-size:0.72rem;font-weight:600;color:#555;">Crédito</span>
+        </div>
+
+        <!-- TRANSFERENCIA -->
+        <div class="pay-pill" style="gap:6px;">
+          <svg viewBox="0 0 18 14" width="22" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.5" y="0.5" width="17" height="13" rx="1.5" stroke="#888"/>
+            <path d="M4 7h10M11 4.5l2.5 2.5L11 9.5" stroke="#888" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span style="font-size:0.72rem;font-weight:600;color:#555;">Transferencia</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- FORMULARIO CONTACTO -->
   <section id="contacto">
     <div class="form-grid">
@@ -1158,16 +1303,104 @@
 
 <!-- MODAL PAGO -->
 <div class="modal-overlay" id="payModal">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:520px;max-height:92vh;overflow-y:auto;">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div class="modal-title" id="modalTitle">Proceder al pago</div>
     <div class="modal-product" id="modalProduct"></div>
-    <div class="modal-price" id="modalPrice"></div>
-    <a href="#" class="modal-payment-link" id="modalPayLink" target="_blank">
+    <div class="modal-price" id="modalPrice" style="margin-bottom:6px;"></div>
+    <div id="ivaNote" style="font-size:0.72rem;color:var(--cool-gray);margin-bottom:20px;">IVA incluido en el precio</div>
+
+    <!-- DATOS DEL COMPRADOR -->
+    <div style="margin-bottom:20px;">
+      <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--cool-gray);margin-bottom:12px;">Datos del comprador</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <label style="font-size:0.72rem;color:var(--cool-gray);display:block;margin-bottom:4px;">Nombre completo *</label>
+          <input id="m-nombre" type="text" placeholder="Tu nombre" style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;" onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+        </div>
+        <div>
+          <label style="font-size:0.72rem;color:var(--cool-gray);display:block;margin-bottom:4px;">RUT *</label>
+          <input id="m-rut" type="text" placeholder="12.345.678-9" style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;" onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+        </div>
+        <div>
+          <label style="font-size:0.72rem;color:var(--cool-gray);display:block;margin-bottom:4px;">Teléfono *</label>
+          <input id="m-tel" type="tel" placeholder="+56 9 XXXX XXXX" style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;" onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+        </div>
+        <div>
+          <label style="font-size:0.72rem;color:var(--cool-gray);display:block;margin-bottom:4px;">Correo electrónico *</label>
+          <input id="m-email" type="email" placeholder="correo@email.com" style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;" onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIRECCIÓN DE ENVÍO -->
+    <div style="margin-bottom:20px;">
+      <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--cool-gray);margin-bottom:12px;">Dirección de envío</div>
+      <div style="display:grid;gap:10px;">
+        <div>
+          <label style="font-size:0.72rem;color:var(--cool-gray);display:block;margin-bottom:4px;">Dirección *</label>
+          <input id="m-dir" type="text" placeholder="Calle, número, depto." style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;" onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div>
+            <label style="font-size:0.72rem;color:var(--cool-gray);display:block;margin-bottom:4px;">Ciudad *</label>
+            <input id="m-ciudad" type="text" placeholder="Santiago" style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;" onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+          </div>
+          <div>
+            <label style="font-size:0.72rem;color:var(--cool-gray);display:block;margin-bottom:4px;">Código postal</label>
+            <input id="m-cp" type="text" placeholder="8320000" style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;" onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COTIZADOR BLUE EXPRESS -->
+    <div style="margin-bottom:20px;background:var(--off-white);border:1.5px solid var(--light-gray);border-radius:12px;padding:16px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+        <img src="https://www.blue.cl/wp-content/uploads/2020/08/logo-blue.png"
+             onerror="this.style.display='none'"
+             alt="Blue Express" style="height:22px;width:auto;"/>
+        <span style="font-size:0.75rem;font-weight:600;color:var(--charcoal);">Cotizar envío Blue Express</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;">
+        <div>
+          <label style="font-size:0.7rem;color:var(--cool-gray);display:block;margin-bottom:4px;">Código postal destino</label>
+          <input id="be-cp" type="text" placeholder="ej: 8320000"
+            style="width:100%;padding:9px 12px;border:1.5px solid var(--light-gray);border-radius:8px;font-size:0.85rem;font-family:inherit;outline:none;"
+            onfocus="this.style.borderColor='var(--charcoal)'" onblur="this.style.borderColor='var(--light-gray)'"/>
+        </div>
+        <button onclick="cotizarBlueExpress()"
+          style="padding:9px 16px;background:var(--charcoal);color:white;border:none;border-radius:8px;font-size:0.82rem;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;">
+          Cotizar →
+        </button>
+      </div>
+      <div id="be-result" style="margin-top:10px;font-size:0.82rem;color:var(--charcoal);display:none;"></div>
+    </div>
+
+    <!-- BOTÓN ENVIAR PEDIDO -->
+    <button onclick="enviarPedido()"
+      style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:var(--charcoal);color:white;border:none;border-radius:50px;font-size:0.9rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.2s;margin-bottom:12px;"
+      onmouseover="this.style.background='#444'" onmouseout="this.style.background='var(--charcoal)'">
+      📧 Enviar pedido
+    </button>
+
+    <a href="#" class="modal-payment-link" id="modalPayLink" target="_blank"
+       style="display:none;">
       💳 Ir al link de pago
     </a>
-    <p style="font-size:0.75rem;color:var(--cool-gray);margin-top:14px;text-align:center;">
-      También puedes escribirnos por WhatsApp para coordinar el pago.
+
+    <div class="modal-pay-methods">
+      <span class="modal-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/80px-Visa_Inc._logo.svg.png" alt="Visa" style="height:11px;width:auto"/> Visa</span>
+      <span class="modal-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/80px-Mastercard-logo.svg.png" alt="MC" style="height:14px;width:auto"/> Mastercard</span>
+      <span class="modal-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/American_Express_logo_%282018%29.svg/80px-American_Express_logo_%282018%29.svg.png" alt="Amex" style="height:14px;width:auto"/> Amex</span>
+      <span class="modal-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/80px-Google_Pay_Logo.svg.png" alt="GPay" style="height:12px;width:auto"/> Google Pay</span>
+      <span class="modal-pay-pill" style="background:#000;color:#fff;border-color:#000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/80px-Apple_Pay_logo.svg.png" alt="APay" style="height:12px;width:auto"/> Apple Pay</span>
+      <span class="modal-pay-pill">💳 Débito / Crédito</span>
+      <span class="modal-pay-pill">🔄 Transferencia</span>
+      <span class="modal-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/MercadoPago_logo.png/80px-MercadoPago_logo.png" alt="MP" style="height:12px;width:auto"/> MercadoPago</span>
+    </div>
+    <p style="font-size:0.72rem;color:var(--cool-gray);margin-top:12px;text-align:center;">
+      También puedes coordinar por <a href="https://wa.me/56939276187" style="color:var(--charcoal);font-weight:600;" target="_blank">WhatsApp</a>
     </p>
   </div>
 </div>
@@ -1285,26 +1518,26 @@ const AUDIO_PRODUCTS = [
     id: 'pro1', name: 'iPods Pro 1',
     // ► Agrega hasta 5 rutas de imagen. Ejemplo: ['foto1.jpg','foto2.jpg']
     imgs: ['','',''],
-    anc:    00000,
-    no_anc: 24990,
+    anc:    28790,
+    no_anc: 23990,
   },
   {
     id: 'pro2', name: 'iPods Pro 2',
     imgs: ['','',''],
-    anc:    28990,
-    no_anc: 24990,
+    anc:    28790,
+    no_anc: 23990,
   },
   {
     id: 'pro3', name: 'iPods Pro 3',
     imgs: ['','',''],
-    anc:    31000,
-    no_anc: 27990,
+    anc:    30590,
+    no_anc: 26990,
   },
   {
     id: 'pods4', name: 'iPods 4',
     imgs: ['','',''],
-    anc:    28990,
-    no_anc: 24990,
+    anc:    28790,
+    no_anc: 23890,
   },
 ];
 
@@ -1488,6 +1721,95 @@ function sliderMove(dir) { sliderGoTo(sliderIndex + dir); }
 
 // Auto-advance every 4s
 setInterval(() => sliderMove(1), 4000);
+
+// ══ COTIZADOR BLUE EXPRESS ══
+// Blue Express no tiene API pública gratuita, abrimos su cotizador oficial con los datos prellenados
+function cotizarBlueExpress() {
+  const cp = document.getElementById('be-cp').value.trim();
+  const res = document.getElementById('be-result');
+  if (!cp) {
+    res.style.display = 'block';
+    res.style.color = '#c0392b';
+    res.innerHTML = '⚠️ Ingresa el código postal de destino.';
+    return;
+  }
+  res.style.display = 'block';
+  res.style.color = 'var(--charcoal)';
+  res.innerHTML = '📦 Abriendo cotizador Blue Express...';
+  // Redirige al cotizador oficial de Blue Express
+  window.open(`https://www.blue.cl/cotizacion/?origen=2820000&destino=${encodeURIComponent(cp)}&peso=0.3&largo=20&ancho=15&alto=8`, '_blank');
+  setTimeout(() => {
+    res.innerHTML = '✅ Se abrió el cotizador de Blue Express en una nueva pestaña. Copia el valor del envío y agrégalo a tu pedido.';
+  }, 800);
+}
+
+// ══ ENVIAR PEDIDO AL CORREO (via Formspree) ══
+// Para activar: crea una cuenta gratis en formspree.io, crea un form con el email morenovicente2211@gmail.com
+// y reemplaza FORMSPREE_ID con tu ID (ej: xpwzlkrb)
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/FORMSPREE_ID'; // ← Reemplaza FORMSPREE_ID
+
+async function enviarPedido() {
+  const nombre = document.getElementById('m-nombre').value.trim();
+  const rut    = document.getElementById('m-rut').value.trim();
+  const tel    = document.getElementById('m-tel').value.trim();
+  const email  = document.getElementById('m-email').value.trim();
+  const dir    = document.getElementById('m-dir').value.trim();
+  const ciudad = document.getElementById('m-ciudad').value.trim();
+  const cp     = document.getElementById('m-cp').value.trim();
+  const prod   = document.getElementById('modalProduct').textContent;
+  const precio = document.getElementById('modalPrice').textContent;
+
+  if (!nombre || !rut || !tel || !email || !dir || !ciudad) {
+    alert('Por favor completa todos los campos obligatorios (*).');
+    return;
+  }
+
+  const btn = event.currentTarget;
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: `🛒 Nuevo pedido LunaPhone — ${prod}`,
+        Producto:   prod,
+        Precio:     precio + ' (IVA incluido)',
+        Nombre:     nombre,
+        RUT:        rut,
+        Teléfono:   tel,
+        Email:      email,
+        Dirección:  dir,
+        Ciudad:     ciudad,
+        'Cód.Postal': cp || 'No indicado',
+        _replyto:   email,
+      })
+    });
+
+    if (res.ok) {
+      btn.textContent = '✅ ¡Pedido enviado!';
+      btn.style.background = '#27ae60';
+      // Also show pay link
+      document.getElementById('modalPayLink').style.display = 'block';
+      setTimeout(() => {
+        btn.textContent = '📧 Enviar pedido';
+        btn.style.background = 'var(--charcoal)';
+        btn.disabled = false;
+      }, 4000);
+    } else {
+      throw new Error('Error al enviar');
+    }
+  } catch(e) {
+    // Fallback: open mailto
+    const body = encodeURIComponent(
+      `Producto: ${prod}\nPrecio: ${precio}\nNombre: ${nombre}\nRUT: ${rut}\nTeléfono: ${tel}\nEmail: ${email}\nDirección: ${dir}\nCiudad: ${ciudad}\nCódigo postal: ${cp}`
+    );
+    window.open(`mailto:morenovicente2211@gmail.com?subject=Pedido LunaPhone — ${encodeURIComponent(prod)}&body=${body}`);
+    btn.textContent = '📧 Enviar pedido';
+    btn.disabled = false;
+  }
+}
 
 // ══ INIT ══
 renderAudio();
