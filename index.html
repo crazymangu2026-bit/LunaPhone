@@ -877,6 +877,22 @@
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
   </style>
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    // ╔══════════════════════════════════════════════╗
+    // ║  EMAILJS CONFIG — Pasos para activar:        ║
+    // ║  1. Ve a emailjs.com → crea cuenta gratis    ║
+    // ║  2. Add Service → Gmail → conecta tu gmail   ║
+    // ║  3. Email Templates → crea template y copia  ║
+    // ║     el Template ID                           ║
+    // ║  4. Account → Public Key → copia y pega      ║
+    // ╚══════════════════════════════════════════════╝
+    const EJS_PUBLIC_KEY  = 'cCyqSOULXA61QxoXt';
+    const EJS_SERVICE_ID  = 'service_vrohjsb';
+    const EJS_TEMPLATE_ID = 'template_ipeu5ap';
+    emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+  </script>
 </head>
 <body>
 
@@ -1499,15 +1515,15 @@ const PAYMENT_LINKS = {
   'iphone-17':         'https://TU_LINK_DE_PAGO/iphone-17',
   'iphone-17-pro':     'https://TU_LINK_DE_PAGO/iphone-17-pro',
   'iphone-17-pro-max': 'https://TU_LINK_DE_PAGO/iphone-17-pro-max',
-  // Audífonos
-  'pro1-anc':    'https://TU_LINK_DE_PAGO/pro1-anc',
-  'pro1-no-anc': 'https://TU_LINK_DE_PAGO/pro1-no-anc',
-  'pro2-anc':    'https://TU_LINK_DE_PAGO/pro2-anc',
-  'pro2-no-anc': 'https://TU_LINK_DE_PAGO/pro2-no-anc',
-  'pro3-anc':    'https://TU_LINK_DE_PAGO/pro3-anc',
-  'pro3-no-anc': 'https://TU_LINK_DE_PAGO/pro3-no-anc',
-  'pods4-anc':   'https://TU_LINK_DE_PAGO/pods4-anc',
-  'pods4-no-anc':'https://TU_LINK_DE_PAGO/pods4-no-anc',
+  // Audífonos — SumUp
+  'pro1-anc':    'https://pay.sumup.com/b2c/Q8TQVTOK',
+  'pro1-no-anc': 'https://pay.sumup.com/b2c/QHT0WXI0',
+  'pro2-anc':    'https://pay.sumup.com/b2c/Q1IJ06A2',
+  'pro2-no-anc': 'https://pay.sumup.com/b2c/Q74KMSV9',
+  'pro3-anc':    'https://pay.sumup.com/b2c/QDM30KGW',
+  'pro3-no-anc': 'https://pay.sumup.com/b2c/QC06S68H',
+  'pods4-anc':   'https://pay.sumup.com/b2c/QV2JUQGL',
+  'pods4-no-anc':'https://pay.sumup.com/b2c/QSQYXL3F',
 };
 
 function formatCLP(n){ return '$' + n.toLocaleString('es-CL'); }
@@ -1638,11 +1654,20 @@ function openAudioModal(id, anc, name){
 }
 
 // ══ MODAL PAGO ══
+let _currentPayLink = '#';
+
 function openModal(key, productName, price){
   document.getElementById('modalProduct').textContent = productName;
   document.getElementById('modalPrice').textContent = formatCLP(price) + ' CLP';
-  const link = PAYMENT_LINKS[key] || '#';
-  document.getElementById('modalPayLink').href = link;
+  _currentPayLink = PAYMENT_LINKS[key] || '#';
+  document.getElementById('modalPayLink').href = _currentPayLink;
+  document.getElementById('modalPayLink').style.display = 'none'; // hidden until order sent
+  // Reset form
+  ['m-nombre','m-rut','m-tel','m-email','m-dir','m-ciudad','m-cp','be-cp'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = '';
+  });
+  const beRes = document.getElementById('be-result');
+  if(beRes){ beRes.style.display='none'; beRes.textContent=''; }
   document.getElementById('payModal').classList.add('open');
 }
 function closeModal(){ document.getElementById('payModal').classList.remove('open'); }
@@ -1745,9 +1770,6 @@ function cotizarBlueExpress() {
 
 // ══ ENVIAR PEDIDO AL CORREO (via Formspree) ══
 // Para activar: crea una cuenta gratis en formspree.io, crea un form con el email morenovicente2211@gmail.com
-// y reemplaza FORMSPREE_ID con tu ID (ej: xpwzlkrb)
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/FORMSPREE_ID'; // ← Reemplaza FORMSPREE_ID
-
 async function enviarPedido() {
   const nombre = document.getElementById('m-nombre').value.trim();
   const rut    = document.getElementById('m-rut').value.trim();
@@ -1760,55 +1782,82 @@ async function enviarPedido() {
   const precio = document.getElementById('modalPrice').textContent;
 
   if (!nombre || !rut || !tel || !email || !dir || !ciudad) {
-    alert('Por favor completa todos los campos obligatorios (*).');
+    alert('⚠️ Por favor completa todos los campos obligatorios (*).');
     return;
   }
 
   const btn = event.currentTarget;
-  btn.textContent = 'Enviando...';
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '⏳ Enviando...';
   btn.disabled = true;
 
-  try {
-    const res = await fetch(FORMSPREE_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        _subject: `🛒 Nuevo pedido LunaPhone — ${prod}`,
-        Producto:   prod,
-        Precio:     precio + ' (IVA incluido)',
-        Nombre:     nombre,
-        RUT:        rut,
-        Teléfono:   tel,
-        Email:      email,
-        Dirección:  dir,
-        Ciudad:     ciudad,
-        'Cód.Postal': cp || 'No indicado',
-        _replyto:   email,
-      })
-    });
+  const templateParams = {
+    to_email:   'morenovicente2211@gmail.com',
+    reply_to:   email,
+    subject:    `🛒 Nuevo pedido LunaPhone — ${prod}`,
+    producto:   prod,
+    precio:     precio + ' (IVA incluido)',
+    link_pago:  _currentPayLink,
+    nombre,
+    rut,
+    telefono:   tel,
+    email_cliente: email,
+    direccion:  dir,
+    ciudad,
+    cod_postal: cp || 'No indicado',
+  };
 
-    if (res.ok) {
-      btn.textContent = '✅ ¡Pedido enviado!';
-      btn.style.background = '#27ae60';
-      // Also show pay link
-      document.getElementById('modalPayLink').style.display = 'block';
-      setTimeout(() => {
-        btn.textContent = '📧 Enviar pedido';
-        btn.style.background = 'var(--charcoal)';
-        btn.disabled = false;
-      }, 4000);
+  try {
+    // Try EmailJS first
+    const result = await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, templateParams);
+    if (result.status === 200) {
+      onSuccess(btn, originalText);
     } else {
-      throw new Error('Error al enviar');
+      throw new Error('EmailJS status: ' + result.status);
     }
-  } catch(e) {
-    // Fallback: open mailto
-    const body = encodeURIComponent(
-      `Producto: ${prod}\nPrecio: ${precio}\nNombre: ${nombre}\nRUT: ${rut}\nTeléfono: ${tel}\nEmail: ${email}\nDirección: ${dir}\nCiudad: ${ciudad}\nCódigo postal: ${cp}`
-    );
-    window.open(`mailto:morenovicente2211@gmail.com?subject=Pedido LunaPhone — ${encodeURIComponent(prod)}&body=${body}`);
-    btn.textContent = '📧 Enviar pedido';
-    btn.disabled = false;
+  } catch(err) {
+    console.warn('EmailJS falló, intentando mailto...', err);
+    // Reliable mailto fallback
+    const body = [
+      `🛒 NUEVO PEDIDO LUNAPHONE`,
+      `─────────────────────────`,
+      `Producto:    ${prod}`,
+      `Precio:      ${precio} (IVA incluido)`,
+      `Link pago:   ${_currentPayLink}`,
+      `─────────────────────────`,
+      `Nombre:      ${nombre}`,
+      `RUT:         ${rut}`,
+      `Teléfono:    ${tel}`,
+      `Email:       ${email}`,
+      `─────────────────────────`,
+      `Dirección:   ${dir}`,
+      `Ciudad:      ${ciudad}`,
+      `Cód. Postal: ${cp || 'No indicado'}`,
+    ].join('\n');
+    window.location.href = `mailto:morenovicente2211@gmail.com?subject=${encodeURIComponent('🛒 Pedido LunaPhone — ' + prod)}&body=${encodeURIComponent(body)}`;
+    onSuccess(btn, originalText);
   }
+}
+
+function onSuccess(btn, originalText) {
+  btn.innerHTML = '✅ ¡Pedido enviado! Abriendo pago...';
+  btn.style.background = '#27ae60';
+  // Show pay link button
+  const payLink = document.getElementById('modalPayLink');
+  payLink.style.display = 'flex';
+  payLink.href = _currentPayLink;
+  // Auto-open payment page after short delay
+  setTimeout(() => {
+    if (_currentPayLink && _currentPayLink !== '#') {
+      window.open(_currentPayLink, '_blank');
+    }
+  }, 1200);
+  // Reset button after 5s
+  setTimeout(() => {
+    btn.innerHTML = originalText;
+    btn.style.background = 'var(--charcoal)';
+    btn.disabled = false;
+  }, 5000);
 }
 
 // ══ INIT ══
@@ -1817,3 +1866,4 @@ observeFadeUp();
 </script>
 </body>
 </html>
+
