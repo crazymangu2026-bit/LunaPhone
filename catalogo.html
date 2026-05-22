@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo — LunaPhone</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    const EJS_PUBLIC_KEY  = 'cCyqSOULXA61QxoXt';
+    const EJS_SERVICE_ID  = 'service_vrohjsb';
+    const EJS_TEMPLATE_ID = 'template_ipeu5ap';
+    emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+  </script>
+  <style>
+    :root {
+      --white: #ffffff;
+      --off-white: #f7f7f5;
+      --light-gray: #ebebeb;
+      --mid-gray: #c8c8c8;
+      --cool-gray: #888888;
+      --dark-gray: #2a2a2a;
+      --charcoal: #1a1a1a;
+      --accent: #3a3a3a;
+      --luna-blue: #e8eef5;
+      --shadow: 0 4px 40px rgba(0,0,0,0.07);
+      --shadow-hover: 0 12px 60px rgba(0,0,0,0.13);
+      --radius: 18px;
+      --radius-sm: 10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--dark-gray); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--light-gray); }
+    ::-webkit-scrollbar-thumb { background: var(--mid-gray); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 70px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 40px; height: 40px; flex-shrink: 0; }
+    .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--charcoal); letter-spacing: -0.02em; }
+    .logo-text span { font-weight: 300; color: var(--cool-gray); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--cool-gray); font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--charcoal); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--charcoal); border-radius: 2px; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { text-decoration: none; font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 300; color: var(--charcoal); transition: opacity 0.2s; }
+    .mobile-menu a:hover { opacity: 0.5; }
+    .mobile-menu-divider { width: 40px; height: 1px; background: var(--mid-gray); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 120px 80px 60px;
+      background: linear-gradient(135deg, var(--white) 0%, var(--luna-blue) 100%);
+      border-bottom: 1px solid var(--light-gray);
+    }
+    .breadcrumb { font-size: 0.78rem; color: var(--cool-gray); margin-bottom: 16px; }
+    .breadcrumb a { color: var(--cool-gray); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--charcoal); }
+    .page-header h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem,4vw,3.8rem); font-weight: 300; color: var(--charcoal); letter-spacing: -0.02em; margin-bottom: 10px; }
+    .page-header p { color: var(--cool-gray); font-size: 0.95rem; max-width: 500px; line-height: 1.65; }
+
+    /* ── SECTION SHARED ── */
+    .cat-section { padding: 80px 80px; }
+    .cat-section:nth-child(even) { background: var(--white); }
+    .section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 10px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 300; color: var(--charcoal); letter-spacing: -0.02em; margin-bottom: 8px; }
+    .divider { width: 40px; height: 2px; background: var(--mid-gray); margin: 14px 0 36px; }
+
+    /* ── AUDIO CARDS ── */
+    .audio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 24px; }
+    .audio-card { background: var(--white); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--light-gray); transition: all 0.3s; }
+    .audio-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+
+    /* Slider */
+    .audio-card-img { width: 100%; aspect-ratio: 1/1; position: relative; overflow: hidden; background: #f5f5f3; touch-action: pan-y; }
+    .aslider-track { display: flex; width: 100%; height: 100%; will-change: transform; transition: transform 0.45s cubic-bezier(0.77,0,0.175,1); }
+    .aslider-slide { min-width: 100%; width: 100%; height: 100%; flex-shrink: 0; flex-grow: 0; position: relative; overflow: hidden; background: #f5f5f3; display: flex; align-items: center; justify-content: center; }
+    .aslider-slide img { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+    .aslider-slide .img-ph { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--mid-gray); font-size: 0.72rem; text-align: center; padding: 12px; }
+    .aslider-slide .img-ph svg { width: 36px; opacity: 0.3; }
+    .aslider-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; background: rgba(255,255,255,0.85); border: none; border-radius: 50%; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.12); z-index: 5; transition: all 0.2s; }
+    .aslider-arrow:hover { background: white; transform: translateY(-50%) scale(1.1); }
+    .aslider-arrow.prev { left: 7px; }
+    .aslider-arrow.next { right: 7px; }
+    .aslider-dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; z-index: 5; }
+    .aslider-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.12); cursor: pointer; transition: all 0.25s; }
+    .aslider-dot.active { background: var(--charcoal); transform: scale(1.3); }
+    .aslider-count { position: absolute; top: 8px; right: 10px; background: rgba(0,0,0,0.4); color: white; font-size: 0.65rem; padding: 3px 8px; border-radius: 50px; z-index: 5; }
+
+    .audio-card-body { padding: 22px; }
+    .audio-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; }
+    .audio-card-desc { font-size: 0.8rem; color: var(--cool-gray); margin-bottom: 14px; line-height: 1.5; }
+    .audio-toggle { display: flex; gap: 8px; margin: 14px 0; }
+    .toggle-btn { flex: 1; padding: 9px 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--light-gray); background: transparent; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--cool-gray); cursor: pointer; transition: all 0.2s; text-align: center; }
+    .toggle-btn.active { background: var(--charcoal); border-color: var(--charcoal); color: var(--white); }
+    .audio-price { font-size: 1.3rem; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+    .audio-iva { font-size: 0.72rem; color: var(--cool-gray); margin-bottom: 14px; }
+    .audio-specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .spec-tag { padding: 4px 10px; background: var(--off-white); border: 1px solid var(--light-gray); border-radius: 50px; font-size: 0.7rem; color: var(--cool-gray); }
+    .audio-btn { display: block; width: 100%; padding: 12px; background: var(--charcoal); color: var(--white); border: none; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; text-align: center; transition: background 0.2s; }
+    .audio-btn:hover { background: var(--accent); }
+
+    /* ── CUSTOM SECTIONS (10 slots) ── */
+    .custom-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 24px; }
+    .custom-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--light-gray);
+      transition: all 0.3s;
+    }
+    .custom-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+    .custom-card-img {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--luna-blue);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .custom-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .custom-card-img .img-ph { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--mid-gray); font-size: 0.72rem; text-align: center; }
+    .custom-card-img .img-ph svg { width: 32px; opacity: 0.3; }
+    .custom-card-body { padding: 20px; }
+    .custom-card-num { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 6px; }
+    .custom-card-name { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; }
+    .custom-card-desc { font-size: 0.8rem; color: var(--cool-gray); line-height: 1.5; margin-bottom: 14px; }
+    .custom-card-price { font-size: 1.1rem; font-weight: 600; color: var(--charcoal); margin-bottom: 14px; }
+    .custom-card-btn { display: block; width: 100%; padding: 10px; background: var(--charcoal); color: var(--white); border: none; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; cursor: pointer; text-align: center; text-decoration: none; transition: background 0.2s; }
+    .custom-card-btn:hover { background: var(--accent); }
+
+    /* ── MODAL ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--white); border-radius: var(--radius); padding: 40px; max-width: 520px; width: 92%; position: relative; max-height: 92vh; overflow-y: auto; animation: slideUp 0.35s ease; }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-close { position: absolute; top: 16px; right: 16px; background: var(--light-gray); border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; color: var(--cool-gray); }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--charcoal); margin-bottom: 4px; }
+    .modal-product { font-size: 0.85rem; color: var(--cool-gray); margin-bottom: 16px; }
+    .modal-price { font-size: 1.9rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; }
+    .modal-iva { font-size: 0.72rem; color: var(--cool-gray); margin-bottom: 18px; }
+    .m-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cool-gray); margin-bottom: 10px; }
+    .m-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .m-field label { font-size: 0.7rem; color: var(--cool-gray); display: block; margin-bottom: 4px; }
+    .m-field input { width: 100%; padding: 9px 12px; border: 1.5px solid var(--light-gray); border-radius: 8px; font-size: 0.85rem; font-family: inherit; outline: none; transition: border-color 0.2s; }
+    .m-field input:focus { border-color: var(--charcoal); }
+    .m-field.full { grid-column: 1/-1; }
+    .m-submit { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px; background: var(--charcoal); color: white; border: none; border-radius: 50px; font-size: 0.9rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.2s; margin-bottom: 10px; }
+    .m-submit:hover { background: var(--accent); }
+    .m-pay-link { display: none; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px; background: #27ae60; color: white; border-radius: 50px; font-size: 0.9rem; font-weight: 500; text-decoration: none; text-align: center; margin-bottom: 12px; }
+    .m-pay-methods { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--light-gray); }
+    .m-pay-pill { display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: var(--off-white); border: 1px solid var(--light-gray); border-radius: 6px; font-size: 0.65rem; font-weight: 600; color: var(--cool-gray); }
+
+    /* Blue Express */
+    .be-box { background: var(--off-white); border: 1.5px solid var(--light-gray); border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+    .be-box-title { font-size: 0.75rem; font-weight: 600; color: var(--charcoal); margin-bottom: 10px; }
+    .be-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; }
+    .be-row input { width: 100%; padding: 9px 12px; border: 1.5px solid var(--light-gray); border-radius: 8px; font-size: 0.85rem; font-family: inherit; outline: none; }
+    .be-row button { padding: 9px 14px; background: var(--charcoal); color: white; border: none; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .be-result { margin-top: 8px; font-size: 0.8rem; color: var(--charcoal); display: none; }
+
+    /* ── WA FAB ── */
+    .wa-fab { position: fixed; bottom: 28px; right: 28px; z-index: 900; width: 56px; height: 56px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: all 0.3s; animation: pulse 2.5s infinite; }
+    .wa-fab:hover { transform: scale(1.1); }
+    @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); } 50% { box-shadow: 0 4px 40px rgba(37,211,102,0.7); } }
+
+    /* ── FOOTER ── */
+    footer { background: var(--charcoal); color: var(--white); padding: 60px 80px 36px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { margin-top: 12px; font-size: 0.85rem; line-height: 1.65; color: var(--cool-gray); max-width: 240px; }
+    .footer-col h4 { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid-gray); margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { color: var(--cool-gray); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; color: var(--cool-gray); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .page-header { padding: 100px 24px 48px; }
+      .cat-section { padding: 60px 24px; }
+      footer { padding: 48px 24px 28px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+      .m-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .custom-grid { grid-template-columns: 1fr; }
+      .audio-grid { grid-template-columns: 1fr; }
+    }
+
+    .fade-up { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg class="logo-mark" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" fill="#1a1a1a"/>
+      <ellipse cx="40" cy="58" rx="26" ry="12" fill="#d8d8d3"/>
+      <ellipse cx="40" cy="56" rx="26" ry="11" fill="#e8e8e2"/>
+      <ellipse cx="40" cy="46" rx="11" ry="13" fill="#f5f5f0"/>
+      <ellipse cx="40" cy="30" rx="11" ry="10" fill="#f5f5f0"/>
+      <polygon points="31,23 27,14 36,22" fill="#f5f5f0"/>
+      <polygon points="49,23 53,14 44,22" fill="#f5f5f0"/>
+      <polygon points="31.5,22 28,15 35,21" fill="#e0b0b8"/>
+      <polygon points="48.5,22 52,15 45,21" fill="#e0b0b8"/>
+      <ellipse cx="36" cy="30" rx="2.5" ry="3" fill="#2a2a2a"/>
+      <ellipse cx="44" cy="30" rx="2.5" ry="3" fill="#2a2a2a"/>
+      <circle cx="36.8" cy="29" r="0.9" fill="white"/>
+      <circle cx="44.8" cy="29" r="0.9" fill="white"/>
+      <polygon points="40,35 38.5,37 41.5,37" fill="#d4829a"/>
+      <path d="M51 52 Q60 42 57 34 Q55 30 52 33 Q54 36 53 44 Q52 50 51 54" fill="#f5f5f0"/>
+      <ellipse cx="33" cy="58" rx="5" ry="3.5" fill="#f5f5f0"/>
+      <ellipse cx="47" cy="58" rx="5" ry="3.5" fill="#f5f5f0"/>
+      <circle cx="18" cy="18" r="1.2" fill="#d4d4d4"/>
+      <circle cx="62" cy="14" r="1" fill="#d4d4d4"/>
+    </svg>
+    <span class="logo-text">Luna<span>Phone</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="catalogo.html" class="active">Catálogo</a></li>
+    <li><a href="index.html#audifonos">Audífonos</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" onclick="closeMenu()">Inicio</a>
+  <div class="mobile-menu-divider"></div>
+  <a href="catalogo.html" onclick="closeMenu()">Catálogo</a>
+  <a href="index.html#audifonos" onclick="closeMenu()">Audífonos</a>
+  <a href="index.html#contacto" onclick="closeMenu()">Contacto</a>
+  <div class="mobile-menu-divider"></div>
+  <a href="https://wa.me/56939276187" target="_blank">WhatsApp</a>
+</div>
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="index.html">Inicio</a> &nbsp;›&nbsp; Catálogo
+  </div>
+  <h1>Catálogo Completo</h1>
+  <p>Todos nuestros productos disponibles. Audífonos, accesorios y más. Precios con IVA incluido.</p>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN: AUDÍFONOS PREMIUM
+══════════════════════════════════════ -->
+<section class="cat-section" id="audifonos">
+  <div class="section-label">Audífonos Premium</div>
+  <h2 class="section-title">iPods & Audífonos</h2>
+  <div class="divider"></div>
+  <div class="audio-grid" id="audioGrid"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°1
+     ► Edita: nombre, descripción, precio, link de pago, imágenes
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-1">
+  <div class="section-label">Sección 1</div>
+  <h2 class="section-title">Nombre Sección 1</h2>  <!-- ← Edita el título -->
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec1"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°2
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-2">
+  <div class="section-label">Sección 2</div>
+  <h2 class="section-title">Nombre Sección 2</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec2"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°3
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-3">
+  <div class="section-label">Sección 3</div>
+  <h2 class="section-title">Nombre Sección 3</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec3"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°4
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-4">
+  <div class="section-label">Sección 4</div>
+  <h2 class="section-title">Nombre Sección 4</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec4"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°5
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-5">
+  <div class="section-label">Sección 5</div>
+  <h2 class="section-title">Nombre Sección 5</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec5"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°6
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-6">
+  <div class="section-label">Sección 6</div>
+  <h2 class="section-title">Nombre Sección 6</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec6"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°7
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-7">
+  <div class="section-label">Sección 7</div>
+  <h2 class="section-title">Nombre Sección 7</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec7"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°8
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-8">
+  <div class="section-label">Sección 8</div>
+  <h2 class="section-title">Nombre Sección 8</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec8"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°9
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-9">
+  <div class="section-label">Sección 9</div>
+  <h2 class="section-title">Nombre Sección 9</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec9"></div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN PERSONALIZABLE N°10
+══════════════════════════════════════ -->
+<section class="cat-section" id="seccion-10">
+  <div class="section-label">Sección 10</div>
+  <h2 class="section-title">Nombre Sección 10</h2>
+  <div class="divider"></div>
+  <div class="custom-grid" id="grid-sec10"></div>
+</section>
+
+<!-- ── MODAL PAGO ── -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title">Proceder al pago</div>
+    <div class="modal-product" id="modalProduct"></div>
+    <div class="modal-price" id="modalPrice"></div>
+    <div class="modal-iva">IVA incluido en el precio</div>
+
+    <div class="m-label">Datos del comprador</div>
+    <div class="m-grid">
+      <div class="m-field"><label>Nombre *</label><input id="m-nombre" type="text" placeholder="Tu nombre"/></div>
+      <div class="m-field"><label>RUT *</label><input id="m-rut" type="text" placeholder="12.345.678-9"/></div>
+      <div class="m-field"><label>Teléfono *</label><input id="m-tel" type="tel" placeholder="+56 9 XXXX XXXX"/></div>
+      <div class="m-field"><label>Correo *</label><input id="m-email" type="email" placeholder="correo@email.com"/></div>
+      <div class="m-field full"><label>Dirección *</label><input id="m-dir" type="text" placeholder="Calle, número, depto."/></div>
+      <div class="m-field"><label>Ciudad *</label><input id="m-ciudad" type="text" placeholder="Ciudad"/></div>
+      <div class="m-field"><label>Cód. Postal</label><input id="m-cp" type="text" placeholder="8320000"/></div>
+    </div>
+
+    <div class="be-box">
+      <div class="be-box-title">📦 Cotizar envío Blue Express</div>
+      <div class="be-row">
+        <input id="be-cp" type="text" placeholder="Código postal destino"/>
+        <button onclick="cotizarBE()">Cotizar →</button>
+      </div>
+      <div class="be-result" id="be-result"></div>
+    </div>
+
+    <button class="m-submit" onclick="enviarPedido()">📧 Enviar pedido</button>
+    <a href="#" class="m-pay-link" id="modalPayLink" target="_blank">💳 Ir al pago →</a>
+
+    <div class="m-pay-methods">
+      <span class="m-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/80px-Visa_Inc._logo.svg.png" alt="Visa" style="height:11px;width:auto"/> Visa</span>
+      <span class="m-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/80px-Mastercard-logo.svg.png" alt="MC" style="height:14px;width:auto"/> Mastercard</span>
+      <span class="m-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/American_Express_logo_%282018%29.svg/80px-American_Express_logo_%282018%29.svg.png" alt="Amex" style="height:13px;width:auto"/> Amex</span>
+      <span class="m-pay-pill">💳 Débito / Crédito</span>
+      <span class="m-pay-pill">🔄 Transferencia</span>
+      <span class="m-pay-pill" style="background:#000;color:#fff;border-color:#000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Apple_Pay_logo.svg/80px-Apple_Pay_logo.svg.png" alt="APay" style="height:12px;width:auto"/> Apple Pay</span>
+      <span class="m-pay-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/80px-Google_Pay_Logo.svg.png" alt="GPay" style="height:12px;width:auto"/> Google Pay</span>
+    </div>
+    <p style="font-size:0.72rem;color:var(--cool-gray);margin-top:10px;text-align:center;">
+      O coordina por <a href="https://wa.me/56939276187" style="color:var(--charcoal);font-weight:600;" target="_blank">WhatsApp</a>
+    </p>
+  </div>
+</div>
+
+<!-- WA FAB -->
+<a href="https://wa.me/56939276187" class="wa-fab" target="_blank">
+  <svg width="28" height="28" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" fill="white"/></svg>
+</a>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="nav-logo" href="index.html">
+        <svg class="logo-mark" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="38" fill="#fff"/>
+          <ellipse cx="40" cy="58" rx="26" ry="12" fill="#ccc"/>
+          <ellipse cx="40" cy="56" rx="26" ry="11" fill="#ddd"/>
+          <ellipse cx="40" cy="46" rx="11" ry="13" fill="#333"/>
+          <ellipse cx="40" cy="30" rx="11" ry="10" fill="#333"/>
+          <polygon points="31,23 27,14 36,22" fill="#333"/>
+          <polygon points="49,23 53,14 44,22" fill="#333"/>
+          <polygon points="31.5,22 28,15 35,21" fill="#c090a0"/>
+          <polygon points="48.5,22 52,15 45,21" fill="#c090a0"/>
+          <ellipse cx="36" cy="30" rx="2.5" ry="3" fill="#f5f5f0"/>
+          <ellipse cx="44" cy="30" rx="2.5" ry="3" fill="#f5f5f0"/>
+          <polygon points="40,35 38.5,37 41.5,37" fill="#d4829a"/>
+          <ellipse cx="33" cy="58" rx="5" ry="3.5" fill="#333"/>
+          <ellipse cx="47" cy="58" rx="5" ry="3.5" fill="#333"/>
+        </svg>
+        <span class="logo-text" style="color:white;">Luna<span>Phone</span></span>
+      </a>
+      <p>Tu tienda de confianza en Rancagua. Equipos y accesorios Apple certificados.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="https://wa.me/56939276187" target="_blank">WhatsApp</a></li>
+        <li><a href="mailto:morenovicente2211@gmail.com">Email</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 LunaPhone · Rancagua, Chile 🇨🇱</span>
+    <span>Hecho con ♡</span>
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════
+// AUDÍFONOS — con imágenes y precios
+// ════════════════════════════════════════════
+const AUDIO_PRODUCTS = [
+  {
+    id: 'pro1', name: 'iPods Pro 1',
+    imgs: ['IMG_1673.png','IMG_1674.jpeg','IMG_1675.jpeg'],
+    anc: 28790, no_anc: 23990,
+    specs: ['Chip H1','Estuche MagSafe','IPX4'],
+    desc: 'Sonido adaptativo con cancelación de ruido activa.',
+    link_anc:    'https://pay.sumup.com/b2c/Q8TQVTOK',
+    link_no_anc: 'https://pay.sumup.com/b2c/QHT0WXI0',
+  },
+  {
+    id: 'pro2', name: 'iPods Pro 2',
+    imgs: ['IMG_1670.png','IMG_1676.png','IMG_1672.jpeg'],
+    anc: 28790, no_anc: 23990,
+    specs: ['Chip H2','Vision Pro','IPX4'],
+    desc: 'Cancelación de ruido de nueva generación con audio espacial.',
+    link_anc:    'https://pay.sumup.com/b2c/Q1IJ06A2',
+    link_no_anc: 'https://pay.sumup.com/b2c/Q74KMSV9',
+  },
+  {
+    id: 'pro3', name: 'iPods Pro 3',
+    imgs: ['IMG_1664.jpeg','IMG_1665.jpeg','IMG_1666.jpeg'],
+    anc: 30590, no_anc: 26990,
+    specs: ['Chip H2+','ANC Avanzado','IPX4'],
+    desc: 'La mejor experiencia de audio en audífonos compactos.',
+    link_anc:    'https://pay.sumup.com/b2c/QDM30KGW',
+    link_no_anc: 'https://pay.sumup.com/b2c/QC06S68H',
+  },
+  {
+    id: 'pods4', name: 'iPods 4',
+    imgs: ['IMG_1680.jpeg','IMG_1681.jpeg','IMG_1682.jpeg'],
+    anc: 28790, no_anc: 23890,
+    specs: ['Chip H2','USB-C','IPX4'],
+    desc: 'El modelo más accesible con calidad de audio premium.',
+    link_anc:    'https://pay.sumup.com/b2c/QV2JUQGL',
+    link_no_anc: 'https://pay.sumup.com/b2c/QSQYXL3F',
+  },
+];
+
+// ════════════════════════════════════════════
+// SECCIONES PERSONALIZABLES 1–10
+// ► Para cada sección agrega tantos productos como quieras
+// ► Campos por producto:
+//     name:     'Nombre del producto'
+//     desc:     'Descripción breve'
+//     price:    99990              ← precio en CLP sin puntos
+//     img:      'foto.jpg'         ← ruta de imagen (dejar '' si no tienes)
+//     payLink:  'https://...'      ← link de pago SumUp u otro
+// ════════════════════════════════════════════
+
+// ── SECCIÓN 1 ──
+// Link de pago Sección 1: payLink de cada producto
+const Cargadores_Y_Mas = [
+  { name: 'Producto S1-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S1A' },
+  { name: 'Producto S1-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S1B' },
+  { name: 'Producto S1-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S1C' },
+];
+
+// ── SECCIÓN 2 ──
+// Link de pago Sección 2: payLink de cada producto
+const SECCION_2 = [
+  { name: 'Producto S2-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S2A' },
+  { name: 'Producto S2-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S2B' },
+  { name: 'Producto S2-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S2C' },
+];
+
+// ── SECCIÓN 3 ──
+// Link de pago Sección 3: payLink de cada producto
+const SECCION_3 = [
+  { name: 'Producto S3-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S3A' },
+  { name: 'Producto S3-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S3B' },
+  { name: 'Producto S3-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S3C' },
+];
+
+// ── SECCIÓN 4 ──
+// Link de pago Sección 4: payLink de cada producto
+const SECCION_4 = [
+  { name: 'Producto S4-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S4A' },
+  { name: 'Producto S4-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S4B' },
+  { name: 'Producto S4-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S4C' },
+];
+
+// ── SECCIÓN 5 ──
+// Link de pago Sección 5: payLink de cada producto
+const SECCION_5 = [
+  { name: 'Producto S5-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S5A' },
+  { name: 'Producto S5-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S5B' },
+  { name: 'Producto S5-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S5C' },
+];
+
+// ── SECCIÓN 6 ──
+// Link de pago Sección 6: payLink de cada producto
+const SECCION_6 = [
+  { name: 'Producto S6-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S6A' },
+  { name: 'Producto S6-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S6B' },
+  { name: 'Producto S6-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S6C' },
+];
+
+// ── SECCIÓN 7 ──
+// Link de pago Sección 7: payLink de cada producto
+const SECCION_7 = [
+  { name: 'Producto S7-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S7A' },
+  { name: 'Producto S7-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S7B' },
+  { name: 'Producto S7-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S7C' },
+];
+
+// ── SECCIÓN 8 ──
+// Link de pago Sección 8: payLink de cada producto
+const SECCION_8 = [
+  { name: 'Producto S8-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S8A' },
+  { name: 'Producto S8-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S8B' },
+  { name: 'Producto S8-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S8C' },
+];
+
+// ── SECCIÓN 9 ──
+// Link de pago Sección 9: payLink de cada producto
+const SECCION_9 = [
+  { name: 'Producto S9-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S9A' },
+  { name: 'Producto S9-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S9B' },
+  { name: 'Producto S9-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S9C' },
+];
+
+// ── SECCIÓN 10 ──
+// Link de pago Sección 10: payLink de cada producto
+const SECCION_10 = [
+  { name: 'Producto S10-A', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S10A' },
+  { name: 'Producto S10-B', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S10B' },
+  { name: 'Producto S10-C', desc: 'Descripción del producto', price: 0, img: '', payLink: 'https://TU_LINK_PAGO_S10C' },
+];
+
+// ════════════════════════════════════════════
+// RENDER — No editar abajo
+// ════════════════════════════════════════════
+function formatCLP(n){ return '$' + n.toLocaleString('es-CL'); }
+
+// Audio slider state
+const aSliderState = {};
+
+function buildSlide(src, name, idx) {
+  if (src) return `<div class="aslider-slide"><img src="${src}" alt="${name} ${idx+1}"/></div>`;
+  return `<div class="aslider-slide"><div class="img-ph">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3z"/><path d="M3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>
+    <span>Imagen ${idx+1}</span></div></div>`;
+}
+
+function renderAudio() {
+  const grid = document.getElementById('audioGrid');
+  grid.innerHTML = AUDIO_PRODUCTS.map(p => {
+    const slides = p.imgs.map((s,i) => buildSlide(s, p.name, i)).join('');
+    const dots   = p.imgs.map((_,i) => `<div class="aslider-dot${i===0?' active':''}" onclick="aGoTo('${p.id}',${i})"></div>`).join('');
+    const tot    = p.imgs.length;
+    return `<div class="audio-card fade-up">
+      <div class="audio-card-img" data-id="${p.id}" data-total="${tot}" id="aimg-${p.id}">
+        <div class="aslider-track" id="atrack-${p.id}">${slides}</div>
+        ${tot>1?`<button class="aslider-arrow prev" onclick="aMove('${p.id}',-1)">&#8592;</button>
+        <button class="aslider-arrow next" onclick="aMove('${p.id}',1)">&#8594;</button>
+        <div class="aslider-dots" id="adots-${p.id}">${dots}</div>
+        <div class="aslider-count" id="acount-${p.id}">1 / ${tot}</div>`:''}
+      </div>
+      <div class="audio-card-body">
+        <div class="audio-card-name">${p.name}</div>
+        <div class="audio-card-desc">${p.desc}</div>
+        <div class="audio-specs">${p.specs.map(s=>`<span class="spec-tag">${s}</span>`).join('')}</div>
+        <div class="audio-toggle">
+          <button class="toggle-btn active" id="btn-anc-${p.id}" onclick="setAudio('${p.id}',true)">Con ANC</button>
+          <button class="toggle-btn" id="btn-noanc-${p.id}" onclick="setAudio('${p.id}',false)">Sin ANC</button>
+        </div>
+        <div class="audio-price" id="price-${p.id}">${formatCLP(p.anc)}</div>
+        <div class="audio-iva">IVA incluido</div>
+        <button class="audio-btn" onclick="openAudioModal('${p.id}',true)">💳 Comprar ahora</button>
+      </div>
+    </div>`;
+  }).join('');
+  initSwipe();
+  observeFadeUp();
+}
+
+function aGoTo(id, n) {
+  const p = AUDIO_PRODUCTS.find(x=>x.id===id);
+  const tot = p.imgs.length;
+  const idx = ((n%tot)+tot)%tot;
+  aSliderState[id] = idx;
+  document.getElementById('atrack-'+id).style.transform = `translateX(-${idx*100}%)`;
+  document.querySelectorAll(`#adots-${id} .aslider-dot`).forEach((d,i)=>d.classList.toggle('active',i===idx));
+  const c = document.getElementById('acount-'+id);
+  if(c) c.textContent = `${idx+1} / ${tot}`;
+}
+function aMove(id, dir){ aGoTo(id,(aSliderState[id]||0)+dir); }
+
+function setAudio(id, anc){
+  const p = AUDIO_PRODUCTS.find(x=>x.id===id);
+  const price = anc ? p.anc : p.no_anc;
+  document.getElementById('price-'+id).textContent = formatCLP(price);
+  document.getElementById('btn-anc-'+id).classList.toggle('active', anc);
+  document.getElementById('btn-noanc-'+id).classList.toggle('active', !anc);
+  const card = document.getElementById('aimg-'+id).closest('.audio-card');
+  card.querySelector('.audio-btn').onclick = () => openAudioModal(id, anc);
+}
+
+function openAudioModal(id, anc){
+  const p = AUDIO_PRODUCTS.find(x=>x.id===id);
+  const price = anc ? p.anc : p.no_anc;
+  const variant = anc ? 'Con ANC' : 'Sin ANC';
+  openModal(`${p.name} — ${variant}`, price, anc ? p.link_anc : p.link_no_anc);
+}
+
+// Custom sections render
+function renderCustom(data, gridId, secNum) {
+  const grid = document.getElementById(gridId);
+  if (!data || data.length === 0) { grid.innerHTML = '<p style="color:var(--cool-gray);font-size:0.85rem;">Sin productos aún. Edita el código para agregar.</p>'; return; }
+  grid.innerHTML = data.map(p => `
+    <div class="custom-card fade-up">
+      <div class="custom-card-img">
+        ${p.img ? `<img src="${p.img}" alt="${p.name}"/>` :
+        `<div class="img-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span>img: "${p.img||'foto.jpg'}"</span></div>`}
+      </div>
+      <div class="custom-card-body">
+        <div class="custom-card-num">Sección ${secNum}</div>
+        <div class="custom-card-name">${p.name}</div>
+        <div class="custom-card-desc">${p.desc}</div>
+        <div class="custom-card-price">${p.price > 0 ? formatCLP(p.price)+' CLP' : 'Precio por definir'}</div>
+        <button class="custom-card-btn" onclick="openModal('${p.name}',${p.price},'${p.payLink}')">💳 Comprar</button>
+      </div>
+    </div>`).join('');
+  observeFadeUp();
+}
+
+// Modal
+let _payLink = '#';
+function openModal(productName, price, payLink) {
+  document.getElementById('modalProduct').textContent = productName;
+  document.getElementById('modalPrice').textContent = price > 0 ? formatCLP(price)+' CLP' : 'Precio a coordinar';
+  _payLink = payLink || '#';
+  document.getElementById('modalPayLink').href = _payLink;
+  document.getElementById('modalPayLink').style.display = 'none';
+  ['m-nombre','m-rut','m-tel','m-email','m-dir','m-ciudad','m-cp','be-cp'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  const br=document.getElementById('be-result'); if(br){br.style.display='none';br.textContent='';}
+  document.getElementById('payModal').classList.add('open');
+}
+function closeModal(){ document.getElementById('payModal').classList.remove('open'); }
+document.getElementById('payModal').addEventListener('click',function(e){ if(e.target===this)closeModal(); });
+
+function cotizarBE(){
+  const cp=document.getElementById('be-cp').value.trim();
+  const res=document.getElementById('be-result');
+  if(!cp){res.style.display='block';res.style.color='#c0392b';res.textContent='⚠️ Ingresa el código postal destino.';return;}
+  res.style.display='block';res.style.color='var(--charcoal)';res.textContent='📦 Abriendo cotizador...';
+  window.open(`https://www.blue.cl/cotizacion/?origen=2820000&destino=${encodeURIComponent(cp)}&peso=0.3&largo=20&ancho=15&alto=8`,'_blank');
+  setTimeout(()=>{ res.textContent='✅ Cotizador abierto en nueva pestaña. Copia el valor y agrégalo a tu pedido.'; },800);
+}
+
+async function enviarPedido(){
+  const nombre=document.getElementById('m-nombre').value.trim();
+  const rut=document.getElementById('m-rut').value.trim();
+  const tel=document.getElementById('m-tel').value.trim();
+  const email=document.getElementById('m-email').value.trim();
+  const dir=document.getElementById('m-dir').value.trim();
+  const ciudad=document.getElementById('m-ciudad').value.trim();
+  const cp=document.getElementById('m-cp').value.trim();
+  const prod=document.getElementById('modalProduct').textContent;
+  const precio=document.getElementById('modalPrice').textContent;
+  if(!nombre||!rut||!tel||!email||!dir||!ciudad){ alert('⚠️ Completa todos los campos obligatorios (*).'); return; }
+  const btn=event.currentTarget;
+  const orig=btn.innerHTML;
+  btn.innerHTML='⏳ Enviando...'; btn.disabled=true;
+  const params={ to_email:'morenovicente2211@gmail.com',reply_to:email,subject:`🛒 Pedido LunaPhone — ${prod}`,producto:prod,precio,link_pago:_payLink,nombre,rut,telefono:tel,email_cliente:email,direccion:dir,ciudad,cod_postal:cp||'No indicado' };
+  try {
+    const r = await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, params);
+    if(r.status===200){ onSuccess(btn,orig); }
+    else throw new Error('status '+r.status);
+  } catch(e) {
+    const body=encodeURIComponent(`Producto: ${prod}\nPrecio: ${precio}\nLink pago: ${_payLink}\nNombre: ${nombre}\nRUT: ${rut}\nTeléfono: ${tel}\nEmail: ${email}\nDirección: ${dir}\nCiudad: ${ciudad}\nCód Postal: ${cp}`);
+    window.location.href=`mailto:morenovicente2211@gmail.com?subject=${encodeURIComponent('🛒 Pedido — '+prod)}&body=${body}`;
+    onSuccess(btn,orig);
+  }
+}
+
+function onSuccess(btn, orig){
+  btn.innerHTML='✅ ¡Pedido enviado!'; btn.style.background='#27ae60';
+  const pl=document.getElementById('modalPayLink');
+  pl.style.display='flex'; pl.href=_payLink;
+  if(_payLink&&_payLink!=='#') setTimeout(()=>window.open(_payLink,'_blank'),1200);
+  setTimeout(()=>{ btn.innerHTML=orig; btn.style.background='var(--charcoal)'; btn.disabled=false; },5000);
+}
+
+// Swipe
+function initSwipe(){
+  document.querySelectorAll('.audio-card-img').forEach(el=>{
+    let sx=0;
+    el.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+    el.addEventListener('touchend',e=>{ const d=sx-e.changedTouches[0].clientX; const id=el.dataset.id; if(Math.abs(d)>40) aMove(id,d>0?1:-1); });
+  });
+}
+
+// Hamburger
+function toggleMenu(){ document.getElementById('hamburger').classList.toggle('open'); document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMenu(){ document.getElementById('hamburger').classList.remove('open'); document.getElementById('mobileMenu').classList.remove('open'); }
+
+// Fade up
+function observeFadeUp(){
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el=>obs.observe(el));
+}
+
+// ── INIT ──
+renderAudio();
+renderCustom(SECCION_1,  'grid-sec1',  1);
+renderCustom(SECCION_2,  'grid-sec2',  2);
+renderCustom(SECCION_3,  'grid-sec3',  3);
+renderCustom(SECCION_4,  'grid-sec4',  4);
+renderCustom(SECCION_5,  'grid-sec5',  5);
+renderCustom(SECCION_6,  'grid-sec6',  6);
+renderCustom(SECCION_7,  'grid-sec7',  7);
+renderCustom(SECCION_8,  'grid-sec8',  8);
+renderCustom(SECCION_9,  'grid-sec9',  9);
+renderCustom(SECCION_10, 'grid-sec10', 10);
+observeFadeUp();
+</script>
+</body>
+</html>
